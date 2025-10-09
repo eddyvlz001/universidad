@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sistema Universitario</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="sidebar">
+    <h2>Sistema Uni</h2>
+    <ul id="menu">
+      <li data-module="docentes" class="active">👨‍🏫 Docentes</li>
+      <li data-module="carreras">🎓 Carreras</li>
+      <li data-module="estudiantes">🧑‍🎓 Estudiantes</li>
+      <li data-module="ciclos">📅 Ciclos</li>
+      <li data-module="materias">📚 Materias</li>
+    </ul>
+  </div>
+
+  <div class="main">
+    <header>
+      <h1 id="title">Docentes</h1>
+      <button id="addBtn">➕ Nuevo</button>
+    </header>
+
+    <div class="table-container">
+      <table>
+        <thead id="thead"></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+
+    <div class="pagination">
+      <button id="prevBtn">⬅️</button>
+      <span id="pageInfo">Página 1</span>
+      <button id="nextBtn">➡️</button>
+    </div>
+  </div>
+
+  <div id="modal" class="modal hidden">
+    <div class="modal-content">
+      <h2 id="modalTitle">Nuevo registro</h2>
+      <form id="dataForm"></form>
+      <div class="modal-actions">
+        <button id="saveBtn" class="primary">Guardar</button>
+        <button id="cancelBtn" class="danger">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

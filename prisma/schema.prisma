@@ -1,0 +1,92 @@
+// schema.prisma
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Docente {
+  id_docente  Int      @id @default(autoincrement())
+  nombre      String
+  apellido    String
+  cedula      String   @unique
+  email       String   @unique
+  telefono    String
+
+  // Relaciones
+  materias    Materia[]
+}
+
+model Estudiante {
+  id_Estudiante Int      @id @default(autoincrement())
+  nombre        String
+  apellido      String
+  cedula        String   @unique
+  email         String   @unique
+  telefono      String
+
+  // Relaciones
+  matriculas    Matricula[]
+  carreraId     Int
+  cicloId       Int
+  carrera       Carrera   @relation(fields: [carreraId], references: [id_Carrera])
+  ciclo         Ciclo     @relation(fields: [cicloId], references: [id_Ciclo])
+}
+
+model Materia {
+  id_Materia     Int       @id @default(autoincrement())
+  nombre_Materia String
+  creditos       Int
+
+  // Relaciones
+  docenteId      Int
+  cicloId        Int
+  docente        Docente   @relation(fields: [docenteId], references: [id_docente])
+  ciclo          Ciclo     @relation(fields: [cicloId], references: [id_Ciclo])
+  matriculas     Matricula[]
+}
+
+model Matricula {
+  id_Matricula     Int       @id @default(autoincrement())
+  fecha_Matricula  String
+  estado           String
+
+  estudianteId     Int
+  materiaId        Int
+  estudiante       Estudiante @relation(fields: [estudianteId], references: [id_Estudiante])
+  materia          Materia    @relation(fields: [materiaId], references: [id_Materia])
+}
+
+model Carrera {
+  id_Carrera        Int             @id @default(autoincrement())
+  nombre_Carrera    String
+
+  // Relaciones
+  especialidades    Especialidad[]
+  ciclos            Ciclo[]
+  estudiantes       Estudiante[]
+}
+
+model Especialidad {
+  id_Especialidad   Int         @id @default(autoincrement())
+  nombre_Especialidad String
+  descripcion         String
+  carreraId           Int
+  carrera             Carrera    @relation(fields: [carreraId], references: [id_Carrera])
+}
+
+model Ciclo {
+  id_Ciclo       Int       @id @default(autoincrement())
+  numero_Ciclo   Int
+  periodo        String
+  carreraId      Int
+  carrera        Carrera   @relation(fields: [carreraId], references: [id_Carrera])
+
+  // Relaciones
+  materias       Materia[]
+  estudiantes    Estudiante[]
+}
